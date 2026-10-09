@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AF-P1 Task Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <p class="eyebrow">APP FACTORY · PHASE 1</p>
+      <h1>Team Task Board</h1>
+      <p>A small app for practising collaborative changes.</p>
+
+      <form id="task-form">
+        <label for="task-title">New task</label>
+        <div class="form-row">
+          <input id="task-title" name="title" type="text" required maxlength="100" />
+          <button type="submit">Add task</button>
+        </div>
+      </form>
+
+      <p id="summary" role="status" aria-live="polite"></p>
+      <ul id="task-list" aria-label="Tasks"></ul>
+    </main>
+  </body>
+</html>
