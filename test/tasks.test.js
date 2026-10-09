@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { addTask, toggleTask, taskSummary } from "../src/tasks.js";
+import { addTask, remainingTasks, toggleTask, taskSummary } from "../src/tasks.js";
 
 test("adds a trimmed task without changing the input list", () => {
   const original = [{ id: 2, title: "Existing", completed: false }];
@@ -25,6 +25,18 @@ test("toggles only the selected task", () => {
   assert.equal(tasks[1].completed, false);
 });
 
-test("summarizes completed tasks", () => {
-  assert.equal(taskSummary([{ id: 1, completed: true }, { id: 2, completed: false }]), "1 of 2 tasks completed");
+test("calculates remaining tasks", () => {
+  const tasks = [
+    { id: 1, title: "A", completed: true },
+    { id: 2, title: "B", completed: false },
+    { id: 3, title: "C", completed: false },
+  ];
+  assert.equal(remainingTasks(tasks), 2);
+});
+
+test("summarizes completed and remaining tasks", () => {
+  assert.equal(
+    taskSummary([{ id: 1, completed: true }, { id: 2, completed: false }]),
+    "1 of 2 tasks completed, 1 remaining"
+  );
 });
