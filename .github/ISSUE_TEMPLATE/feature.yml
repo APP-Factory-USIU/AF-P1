@@ -1,0 +1,26 @@
+name: Small improvement
+description: A focused Week 1 contribution
+title: "Improve: "
+labels: []
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected outcome
+      description: Describe what a user or contributor should be able to do.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Suggested steps
+      description: Keep the task small enough for one pull request.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: How will a reviewer know this is done?
+    validations:
+      required: true
