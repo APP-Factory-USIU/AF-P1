@@ -7,6 +7,10 @@ Members and contact method:
 Joris
 Velma 
 
+Team name:MuscleUp
+
+Members and contact method:
+Shadrack and Shaka
 ## Working agreement
 
 - Where we coordinate:
@@ -15,6 +19,7 @@ Velma
 - How we divide issues:
 - Who reviews a PR if the usual reviewer is unavailable:
 Review person: Joris 
+  Shadrack
 - What we do when a member is blocked:
 - How we resolve a disagreement:
 
