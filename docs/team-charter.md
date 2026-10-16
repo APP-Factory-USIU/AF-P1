@@ -17,7 +17,7 @@ Shadrack and Shaka
 ## Roles for Week 1
 
 | Member | Issue | Reviewer | Evidence link |
-| --- | --- | --- | --- |
-|  |  |  |  |
+| ------ | ----- | -------- | ------------- |
+|        |       |          |               |
 
 Roles should rotate in later weeks. Everyone authors and reviews at least one contribution.
