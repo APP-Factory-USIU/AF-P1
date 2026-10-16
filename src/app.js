@@ -1,5 +1,5 @@
 import { addTask, toggleTask, taskSummary } from "./tasks.js";
-
+//Initializing variables on global scope
 const form = document.querySelector("#task-form");
 const titleInput = document.querySelector("#task-title");
 const list = document.querySelector("#task-list");

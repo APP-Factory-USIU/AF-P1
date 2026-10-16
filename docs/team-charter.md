@@ -1,15 +1,16 @@
 # Team charter
 
-Team name: Team Junubi 
+Team name:MuscleUp
 
-Members and contact method: Billawan12 and tomi3-11
-
+Members and contact method:
+Shadrack and Shaka
 ## Working agreement
 
 - Where we coordinate:
 - Expected response time:
 - How we divide issues:
-- Who reviews a PR if the usual reviewer is unavailable: Thomas
+- Who reviews a PR if the usual reviewer is unavailable:
+  Shadrack
 - What we do when a member is blocked:
 - How we resolve a disagreement:
 
