@@ -11,7 +11,15 @@ export function toggleTask(tasks, id) {
   );
 }
 
+export function deleteTask(tasks, id){
+  return tasks.filter((task) => task.id !== id);
+}
+export function remainingTasks(tasks) {
+  return tasks.filter((task) => !task.completed).length;
+}
+
 export function taskSummary(tasks) {
   const completed = tasks.filter((task) => task.completed).length;
-  return `${completed} of ${tasks.length} tasks completed`;
+  const remaining = remainingTasks(tasks);
+  return `${completed} of ${tasks.length} tasks completed, ${remaining} remaining`;
 }

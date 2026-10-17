@@ -1,16 +1,109 @@
-:root { font-family: system-ui, sans-serif; color: #161616; background: #f7f7f7; }
-* { box-sizing: border-box; }
-body { margin: 0; }
-.container { max-width: 44rem; margin: 3rem auto; padding: 0 1.25rem; }
-.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .12em; }
-h1 { margin-bottom: .4rem; }
-form { margin: 2rem 0 1rem; }
-label { display: block; font-weight: 650; margin-bottom: .5rem; }
-.form-row { display: flex; gap: .5rem; }
-input { flex: 1; min-width: 0; padding: .7rem; border: 1px solid #777; border-radius: .3rem; font: inherit; }
-button { padding: .7rem 1rem; border: 1px solid #222; background: #222; color: white; border-radius: .3rem; font: inherit; cursor: pointer; }
-button:focus-visible, input:focus-visible { outline: 3px solid #555; outline-offset: 2px; }
-#task-list { list-style: none; padding: 0; }
-#task-list li { display: flex; align-items: center; gap: .75rem; padding: .85rem 0; border-bottom: 1px solid #ccc; }
-#task-list button { padding: .3rem .6rem; font-size: .85rem; }
-.done { text-decoration: line-through; color: #555; }
+:root {
+    font-family: system-ui, sans-serif;
+    color: #161616;
+    background: #f7f7f7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.container {
+    max-width: 44rem;
+    margin: 3rem auto;
+    padding: 0 1.25rem;
+}
+
+.eyebrow {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+
+h1 {
+    margin-bottom: .4rem;
+}
+
+form {
+    margin: 2rem 0 1rem;
+}
+
+label {
+    display: block;
+    font-weight: 650;
+    margin-bottom: .5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: .5rem;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    padding: .7rem;
+    border: 1px solid #777;
+    border-radius: .3rem;
+    font: inherit;
+}
+
+button {
+    padding: .7rem 1rem;
+    border: 1px solid #222;
+    background: #222;
+    color: white;
+    border-radius: .3rem;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #555;
+    outline-offset: 2px;
+}
+
+#task-list {
+    list-style: none;
+    padding: 0;
+}
+
+#task-list li {
+    display: flex;
+    align-items: center;
+    gap: .80rem;
+    padding: .85rem 0;
+    border-bottom: 1px solid #ccc;
+}
+
+
+#task-list button {
+    padding: .3rem .6rem;
+    font-size: .85rem;
+}
+
+.done {
+    text-decoration: line-through;
+    color: #555;
+}
+
+
+/* Improve spacing on small screens without changing the layout */
+@media (max-width: 480px) {
+  #task-list li {
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+  }
+
+  #task-list li button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+

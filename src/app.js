@@ -1,4 +1,4 @@
-import { addTask, toggleTask, taskSummary } from "./tasks.js";
+import { addTask, toggleTask, deleteTask, taskSummary } from "./tasks.js";
 
 const form = document.querySelector("#task-form");
 const titleInput = document.querySelector("#task-title");
@@ -29,7 +29,16 @@ function render() {
       render();
     });
 
-    item.append(label, button);
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Delete";
+    deleteButton.setAttribute("aria-label", `Delete ${task.title}`);
+    deleteButton.addEventListener("click", () => {
+      tasks = deleteTask(tasks, task.id);
+      render();
+    });
+
+    item.append(label, button, deleteButton);
     list.append(item);
   }
 }
