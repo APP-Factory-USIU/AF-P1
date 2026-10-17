@@ -44,7 +44,7 @@ test("deletes only the selected task without changing the input list", () => {
   const result = deleteTask(tasks, 2);
   assert.deepEqual(result, [tasks[0], tasks[2]]);
   assert.deepEqual(tasks, original);
-  assert.equal(taskSummary(result), "1 of 2 tasks completed");
+  assert.equal(taskSummary(result), "1 of 2 tasks completed, 1 remaining");
 });
 
 test("deleting an unknown task leaves all tasks intact", () => {
@@ -55,7 +55,7 @@ test("deleting an unknown task leaves all tasks intact", () => {
 test("deleting the last task updates the summary to zero", () => {
   const result = deleteTask([{ id: 1, title: "Last task", completed: true }], 1);
   assert.deepEqual(result, []);
-  assert.equal(taskSummary(result), "0 of 0 tasks completed");
+  assert.equal(taskSummary(result), "0 of 0 tasks completed, 0 remaining");
 });
 test("summarizes completed and remaining tasks", () => {
   assert.equal(
