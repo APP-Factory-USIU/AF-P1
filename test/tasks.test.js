@@ -63,3 +63,28 @@ test("summarizes completed and remaining tasks", () => {
     "1 of 2 tasks completed, 1 remaining"
   );
 });
+
+//Test the next-ID behavior
+
+test("uses the maximum existing ID when IDs are not sequential", () => {
+  const tasks = [
+    { id: 1, title: "First", completed: false },
+    { id: 4, title: "Second", completed: false },
+    { id: 6, title: "Third", completed: false },
+  ];
+
+  const result = addTask(tasks, "Fourth");
+
+  assert.equal(result[3].id, 7);
+});
+
+test("assigns ID 1 when adding a task to an empty list", () => {
+  const tasks = [];
+
+  const result = addTask(tasks, "First task");
+
+  assert.deepEqual(result, [
+    { id: 1, title: "First task", completed: false },
+  ]);
+});
+
