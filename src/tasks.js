@@ -11,8 +11,9 @@ export function toggleTask(tasks, id) {
   );
 }
 
-export function deleteTask(tasks, id) {
+export function deleteTask(tasks, id){
   return tasks.filter((task) => task.id !== id);
+}
 export function remainingTasks(tasks) {
   return tasks.filter((task) => !task.completed).length;
 }
