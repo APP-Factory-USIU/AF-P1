@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>Verify an App Factory credential</title>
+  <style>
+    :root { color-scheme: light; --blue:#183d9b; --gold:#f4bf1b; --ink:#172033; --muted:#546070; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#f4f6fb; color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif; }
+    .rail { height:9px; background:linear-gradient(90deg,var(--blue) 0 77%,var(--gold) 77%); }
+    main { max-width:760px; margin:7vh auto; padding:0 22px; }
+    .brand { font-weight:800; color:var(--blue); letter-spacing:.08em; font-size:18px; }
+    .issuer { color:var(--muted); font-size:13px; letter-spacing:.04em; text-transform:uppercase; }
+    h1 { font-size:clamp(30px,5vw,44px); line-height:1.15; margin:36px 0 12px; }
+    p { color:var(--muted); }
+    .panel { background:white; border:1px solid #dce2ee; border-radius:12px; padding:26px; margin-top:26px; box-shadow:0 12px 36px #14274a0d; }
+    label { display:block; font-size:14px; font-weight:700; margin-bottom:9px; }
+    .row { display:flex; gap:9px; }
+    input { flex:1; min-width:0; padding:13px 14px; border:1px solid #aeb8c9; border-radius:7px; color:var(--ink); font:inherit; text-transform:uppercase; }
+    button { padding:12px 21px; border:0; border-radius:7px; color:white; background:var(--blue); font:700 15px system-ui,sans-serif; cursor:pointer; }
+    button:focus-visible,input:focus-visible { outline:3px solid var(--gold); outline-offset:2px; }
+    #result { margin-top:23px; min-height:0; }
+    #result[hidden] { display:none; }
+    .status { font-weight:800; font-size:18px; margin:0 0 8px; }
+    .valid { color:#146543; } .invalid { color:#9a3131; }
+    dl { display:grid; grid-template-columns:150px 1fr; gap:8px 18px; margin:16px 0 0; }
+    dt { color:var(--muted); } dd { margin:0; font-weight:600; overflow-wrap:anywhere; }
+    small { display:block; color:var(--muted); margin:30px 0; }
+    @media(max-width:520px) { .row { flex-direction:column; } dl { grid-template-columns:1fr; gap:2px; } dd { margin-bottom:9px; } }
+  </style>
+</head>
+<body>
+  <div class="rail" aria-hidden="true"></div>
+  <main>
+    <div class="brand">APP FACTORY</div>
+    <div class="issuer">United States International University-Africa</div>
+    <h1>Verify a credential</h1>
+    <p>Enter the credential ID printed on an App Factory program certificate. A valid result appears only after the issuer publishes the approved record.</p>
+    <section class="panel" aria-label="Credential lookup">
+      <form id="lookup">
+        <label for="credential-id">Credential ID</label>
+        <div class="row"><input id="credential-id" name="id" autocomplete="off" spellcheck="false" required placeholder="AF-2026-XXXX"><button type="submit">Verify</button></div>
+      </form>
+      <div id="result" role="status" aria-live="polite" hidden></div>
+    </section>
+    <small>This registry confirms issuer records. It does not verify a student's identity. If a record is absent, contact the App Factory program lead through an official university channel before relying on the document. Only approved records should be published.</small>
+  </main>
+  <script>
+    const form = document.querySelector('#lookup');
+    const input = document.querySelector('#credential-id');
+    const result = document.querySelector('#result');
+    function line(label, value, dl) {
+      const dt = document.createElement('dt'); dt.textContent = label;
+      const dd = document.createElement('dd'); dd.textContent = String(value || '—');
+      dl.append(dt, dd);
+    }
+    function show(title, message, kind, record) {
+      result.replaceChildren(); result.hidden = false;
+      const h = document.createElement('p'); h.className = `status ${kind}`; h.textContent = title; result.append(h);
+      if (message) { const p = document.createElement('p'); p.textContent = message; result.append(p); }
+      if (record) {
+        const dl = document.createElement('dl');
+        line('Recipient', record.name, dl); line('Program', record.program, dl);
+        line('Level', record.level, dl); line('Studio hours', record.studio_hours, dl);
+        line('Issued', record.issued, dl); line('Valid until', record.expires || 'No expiry', dl);
+        line('Credential ID', record.id, dl); result.append(dl);
+      }
+    }
+    async function verify(id) {
+      const normalized = id.trim().toUpperCase(); input.value = normalized;
+      if (!/^[A-Z0-9-]{6,40}$/.test(normalized)) { show('Check the ID', 'Use the letters, numbers, and hyphens printed on the certificate.', 'invalid'); return; }
+      show('Checking issuer record…', '', '');
+      try {
+        const response = await fetch('./credentials.json', {cache:'no-store'});
+        if (!response.ok) throw new Error('registry unavailable');
+        const data = await response.json();
+        if (!Array.isArray(data.credentials)) throw new Error('invalid registry');
+        const record = data.credentials.find(item => String(item.id).toUpperCase() === normalized);
+        if (!record) { show('No issued record found', 'Confirm the ID. A template or an unissued certificate is not valid.', 'invalid'); return; }
+        if (record.status !== 'active') { show('Credential not active', 'Contact the issuer for its current status.', 'invalid'); return; }
+        show('Valid issuer record', 'The details below match the issuer’s published record.', 'valid', record);
+      } catch (_) { show('Verification temporarily unavailable', 'Try again later or contact the issuer through an official channel.', 'invalid'); }
+    }
+    form.addEventListener('submit', event => { event.preventDefault(); verify(input.value); });
+    const linked = new URLSearchParams(location.search).get('id'); if (linked) verify(linked);
+  </script>
+</body>
+</html>
